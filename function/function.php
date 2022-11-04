@@ -72,3 +72,15 @@ function fill_account_company_select()
     }
     return $output;
 }
+
+/**
+ * Debug
+ *
+ * @param [type] $array
+ * @return void
+ */
+function ddd($array){
+    echo "<pre>";
+    print_r($array);
+    die;
+}

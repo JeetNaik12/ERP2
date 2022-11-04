@@ -78,3 +78,4 @@
             $select.val("0").trigger("change");
         });
     </script>
+    <script src="dist/js/erp_custom.js"></script>

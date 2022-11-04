@@ -1,4 +1,5 @@
 <?php
+include("function/constants.php");
 include("function/function.php");
 include("language/language.php");
 
