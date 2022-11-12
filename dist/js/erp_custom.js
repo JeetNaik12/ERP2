@@ -23,7 +23,7 @@ $(function () {
             jQuery.each(JSON.parse(erp.config.item_data), function(i, val) {
                 html += '<option value="'+val.id+'">'+val.item_name+'</option>';
             });
-            html += '</select></td><td><input type="text" id="unit" name="unit[]" readonly="readonly" class="form-control units"></td><td><input type="quantity" name="quantity[]" class="form-control"></td><td> <button class="btn btn-danger" type="button" onclick="remove_education_fields(' + room + ');"> <i class="fa fa-minus"></i> </button></td></tr></table>'
+            html += '</select></td><td><input type="text" id="unit" name="unit[]" readonly="readonly" class="form-control units"></td><td><input type="quantity" name="quantity[]" class="form-control quantity-input"></td><td> <button class="btn btn-danger" type="button" onclick="remove_education_fields(' + room + ');"> <i class="fa fa-minus"></i> </button></td></tr></table>'
             divtest.innerHTML = html;
              objTo.appendChild(divtest)
     
@@ -69,6 +69,18 @@ $(function () {
         });
       });
       
+
+    
+    $(document).on('keyup','.quantity-input',function(){
+        let qty = 0;
+        $( ".quantity-input" ).each(function() {
+            let value = $(this).val();
+            qty = qty + parseFloat(value);
+        });
+        $('#total_qty').val(qty);
+    });
+    //
+
     $(document).on('submit','#material-request-form',function(e){
         e.preventDefault();
         let form = $('#material-request-form');

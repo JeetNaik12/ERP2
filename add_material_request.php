@@ -123,7 +123,7 @@
                                                                             </select>
                                                                         </td>
                                                                         <td><input type="unit" data-identifier="" id="unit" name="unit[]"  readonly="readonly" class="form-control units"></td>
-                                                                        <td><input type="quantity"  data-identifier="" name="quantity[]" class="form-control"></td>
+                                                                        <td><input type="quantity"  data-identifier="" name="quantity[]" class="form-control quantity-input"></td>
                                                                         <!-- <td><button class="btn btn-success incerement-item-fields" type="button" onclick="item_fields();"><i class="fa fa-plus"></i></button></td> -->
                                                                         <td><button class="btn btn-success incerement-item-fields" data1="xyz" type="button"><i class="fa fa-plus"></i></button></td>
                                                                     </tr>
@@ -136,7 +136,7 @@
                                                         <table class="table table-bordered">
                                                             <tr>
                                                                 <td>TOTAL</td>
-                                                                <td><input type="email" class="form-control"></td>
+                                                                <td><input type="text" id="total_qty" name="total_quentity" class="form-control"></td>
                                                                 <td><input type="email" class="form-control"></td>
                                                                 <td><input type="email" class="form-control"></td>
                                                             </tr>
