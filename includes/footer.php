@@ -26,7 +26,8 @@
     <script>
         var erp = {
             config:{
-                base_url:  "<?= BASE_URL; ?>",
+                base_url: "<?php echo  BASE_URL; ?>",
+                item_data: '<?php echo (isset($item_array) && !empty($item_array) ? json_encode($item_array) : null ); ?>'
             }
         };
     </script>

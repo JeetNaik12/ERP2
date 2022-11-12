@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 // include("config/connection.php");
 
 function Insert($table_name, $data)

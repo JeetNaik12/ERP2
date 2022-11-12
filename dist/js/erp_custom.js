@@ -16,15 +16,22 @@ $(function () {
             var divtest = document.createElement("div");
             divtest.setAttribute("class", "table table-bordered removeclass" + room);
             var rdiv = 'removeclass' + room;
-            
-            divtest.innerHTML = '<table class="table table-bordered"><tr><td><select class="form-control" id="item" name="name="item[]""><option>Select Item</option><option value="2015">2015</option></select></td><td><input type="unit" disabled = true class="form-control"></td><td><input type="quantity" class="form-control"></td><td> <button class="btn btn-danger" type="button" onclick="remove_education_fields(' + room + ');"> <i class="fa fa-minus"></i> </button></td></tr></table>'
-            objTo.appendChild(divtest)
+            let html = '';
+            html += '<table class="table table-bordered"><tr class="item-row-wrapper">';
+            html += '<td><select data-row-id="'+room+'" class="form-control items" id="item" name="item[]">';
+            html += '<option>Select Item</option>';
+            jQuery.each(JSON.parse(erp.config.item_data), function(i, val) {
+                html += '<option value="'+val.id+'">'+val.item_name+'</option>';
+            });
+            html += '</select></td><td><input type="text" id="unit" name="unit[]" readonly="readonly" class="form-control units"></td><td><input type="quantity" name="quantity[]" class="form-control quantity-input"></td><td> <button class="btn btn-danger" type="button" onclick="remove_education_fields(' + room + ');"> <i class="fa fa-minus"></i> </button></td></tr></table>'
+            divtest.innerHTML = html;
+             objTo.appendChild(divtest)
     
             var objTo = document.getElementById('show_qnt_fields')
             var divtest = document.createElement("div");
             divtest.setAttribute("class", "table table-bordered removeclass" + room);
             var rdiv = 'removeclass' + room;
-            divtest.innerHTML = '<table class="table table-bordered"><tr><td><input type="text" name="unit" class="form-control"></td><td><input type="text" name="quantity" class="form-control"></td></tr></table>'
+            divtest.innerHTML = '<table class="table table-bordered"><tr><td><input type="text" id="show_unit_'+room+'" readonly="readonly" name="units2[]" class="form-control"></td><td><input type="text" id="show_qnt_'+room+'" readonly="readonly" name="qty2[]"  class="form-control"></td></tr></table>'
             objTo.appendChild(divtest)
         }
     
@@ -41,82 +48,53 @@ $(function () {
     //material request form
     $(document).on('change','.items',function(e){
         e.preventDefault();
-        let item_id = $(this).val();
+        let item = $(this);
+        let item_id = item.val();
         jQuery.ajax({
             url: erp.config.base_url+'ajax/get_item_details.php',
             method: 'POST',
             data: {item_id:item_id},
             dataType: "json",
             success: function (data) {
-                $('#unit').val(data.unit_name)
-                $('#show_unit').val(data.unit_name)
-                $('#show_qnt').val(data.qnt)
-                
-                // btn.attr('disabled', false);
-                // btn.text('Update');
-                if (data.success == false) {
-                    // iziToast.error({
-                    //     title: 'ERROR',
-                    //     message: data.message,
-                    //     position: 'topRight'
-                    // });
-                    alert("error")
-                } else if (data.success == true) {
-                    console.log("data====", data)
-                    $('.cust-select2').val(null).trigger('change');
-                    // iziToast.success({
-                    //     title: 'SUCCESS',
-                    //     message: data.message,
-                    //     position: 'topRight'
-                    // });
-                    alert("success")
-                }
+                let item_row = $(item).closest('.item-row-wrapper');
+                let row_id = $(item).data('row-id');
+
+
+                console.log(item_row);
+                console.log(row_id);
+                item_row.find('.units').val(data.unit_name)
+          
+
+                // $('#unit').val(data.unit_name);
+                $('#show_unit_' + row_id).val(data.unit_name);
+                $('#show_qnt_' + row_id).val(data.qnt);
             }
         });
       });
       
+
+    
+    $(document).on('keyup','.quantity-input',function(){
+        let qty = 0;
+        $( ".quantity-input" ).each(function() {
+            let value = $(this).val();
+            qty = qty + parseFloat(value);
+        });
+        $('#total_qty').val(qty);
+    });
+    //
+
     $(document).on('submit','#material-request-form',function(e){
         e.preventDefault();
-        // iziToast.success({
-        //     title: 'Success',
-        //     message: 'testing library',
-        //     position: 'topRight'
-        // });
         let form = $('#material-request-form');
         console.log("form",form)
         var formData = new FormData(form[0]);
-        console.log("formData",formData)
-        let btn = $('#btn-material-request');
-
-
-        var company = $("#company").val();
-        var project_name = $("#project_name").val();
-        var date = $("#date").val();
-        var request_type = $("#request_type").val();
-        var request_code = $("#request_code").val();
-        var department = $("#department").val();
-        var request_name = $("#request_name").val();
-       
-        const request_data = {
-            company:company,
-            project_name:project_name,
-            date:date,
-            request_type:request_type,
-            request_code:request_code,
-            department:department,
-            request_name:request_name
-        }
-        console.log('request_data',request_data)
-
-
-        console.log("company", company)
-        btn.attr('disabled', true);
-        btn.text('Updating...');
+        formData.append('company',$('#company').val());
         jQuery.ajax({
-            // url: erp.config.base_url+'ajax/save_material_request.php',
-            url: 'http://localhost/ERP2-main/ajax/save_material_request.php',
+            url: erp.config.base_url+'ajax/save_material_request.php',
+            // url: 'http://localhost/ERP2-main/ajax/save_material_request.php',
             type: 'POST',
-            data: request_data,
+            data: formData,
             cache: false,
             contentType: false,
             processData: false,
@@ -129,7 +107,6 @@ $(function () {
                     //     message: data.message,
                     //     position: 'topRight'
                     // });
-                    alert("error")
                 } else if (data.success == true) {
                     $('.cust-select2').val(null).trigger('change');
                     // iziToast.success({
@@ -137,7 +114,6 @@ $(function () {
                     //     message: data.message,
                     //     position: 'topRight'
                     // });
-                    alert("success")
                 }
             }
         });
