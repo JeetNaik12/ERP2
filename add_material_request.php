@@ -1,6 +1,9 @@
-    <?php
+<?php
     include("includes/header.php");
-    ?>
+    require("DB/db.php");
+    //include("function/function.php");
+    // $conn = new mysqli('localhost', 'root', '', 'erp');
+    ?>      
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -13,15 +16,23 @@
 
                             <div class="col-sm-3" style="float:right;">
                                 <select class="form-control" id="company" name="company">
-                                    <option>Select Company</option>
-                                    <option value="2015" >2015</option>
+                            <option>Select company</option>    
+                            <?php           
+                            $qry="Select * from tbl_company";
+                            $res=mysqli_query($con,$qry);	
+                            while($row=mysqli_fetch_array($res)){
+                            ?>                     
+                             <option value=<?php echo $row['id'];?>><?php echo $row['company_name'];?></option>
+                            <?php
+                            }
+                            ?>
                                 </select>
+                        
                             </div>
                         </div>
                         <br />
                         <div class="repeater-default m-t-30">
                             <form class="needs-validation material-request-form" id="material-request-form" novalidate>
-
                                 <div data-repeater-list="">
                                     <div data-repeater-item="">
                                         <form>
@@ -30,39 +41,43 @@
                                                     <div class="form-group">
                                                         <label for="name">Project name</label>
                                                         <select class="form-control" id="project_name" name="project_name">
-                                                            <option>Select Project Name</option>
-                                                            <option value="2015">2015</option>
-
+                                                        <option>Select project</option>    
+                                                        <?php          
+                                                        $qry="Select * from tbl_project";
+                                                        $res=mysqli_query($con,$qry);	
+                                                        while($row=mysqli_fetch_array($res)){
+                                                        ?>                     
+                                                        <option value=<?php echo $row['id'];?>><?php echo $row['project_name'];?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label for="name">Date</label>
-                                                    <input type="date" class="form-control" name="date" placeholder="Name">
+                                                    <input type="date" id="date" class="form-control" name="date" placeholder="Name">
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <div class="form-group">
                                                         <label for="name">Request Type</label>
                                                         <select class="form-control" id="request_type" name="request_type">
                                                             <option>Select Request Type</option>
-                                                            <option value="2015">2015</option>
-                                                            <option value="2016">2016</option>
-                                                            <option value="2017">2017</option>
-                                                            <option value="2018">2018</option>
+                                                            <option value="Argent">Argent</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-md-4">
-                                                    <label for="email">Request Code</label>
-                                                    <input type="email" class="form-control" name="request_code" placeholder="Request Code">
+                                                    <label for="request_code">Request Code</label>
+                                                    <input type="text" class="form-control" disabled id="request_code" value=<?php echo uniqid('req');?> name="request_code" placeholder="Request Code">
                                                 </div>
                                                 <div class="form-group col-md-4">
-                                                    <label for="pwd">Department</label>
-                                                    <input type="text" class="form-control" name="department" id="pwd" placeholder="Department">
+                                                    <label for="department">Department</label>
+                                                    <input type="text" class="form-control" name="department" id="department" placeholder="Department">
                                                 </div>
                                                 <div class="form-group col-md-4">
-                                                    <label for="msg">Request Name</label>
-                                                    <input type="text" class="form-control"  name="name" id="pwd" placeholder="Request Name">
+                                                    <label for="request_name">Request Name</label>
+                                                    <input type="text" class="form-control"  name="name" id="request_name" placeholder="Request Name">
                                                 </div>
                                             </div>
 
@@ -85,14 +100,23 @@
                                                                 <tbody>
                                                                     <tr>
                                                                         <td>
-                                                                            <select class="form-control" id="item" name="item[]" name="educationDate">
+                                                                            <select class="form-control items" id="item" name="item[]" >
                                                                                 <option>Select Item</option>
-                                                                                <option value="2015">2015</option>
+                                                                                <?php          
+                                                                                $qry="Select * from tbl_item";
+                                                                                $res=mysqli_query($con,$qry);	
+                                                                                while($row=mysqli_fetch_array($res)){
+                                                                                ?> 
+                                                                                <option value=<?php echo $row['id'];?>><?php echo $row['item_name'];?></option>
+                                                                                <?php
+                                                                                }
+                                                                                ?>
                                                                             </select>
                                                                         </td>
-                                                                        <td><input type="unit" name="unit[]" disabled=true class="form-control"></td>
-                                                                        <td><input type="quantity" name="quantity[]" class="form-control"></td>
-                                                                        <td><button class="btn btn-success incerement-item-fields" type="button" onclick="item_fields();"><i class="fa fa-plus"></i></button></td>
+                                                                        <td><input type="unit" data-identifier="" id="unit" name="unit[]" disabled=true class="form-control"></td>
+                                                                        <td><input type="quantity"  data-identifier="" name="quantity[]" class="form-control"></td>
+                                                                        <!-- <td><button class="btn btn-success incerement-item-fields" type="button" onclick="item_fields();"><i class="fa fa-plus"></i></button></td> -->
+                                                                        <td><button class="btn btn-success incerement-item-fields" data1="xyz" type="button"><i class="fa fa-plus"></i></button></td>
                                                                     </tr>
 
                                                                 </tbody>
@@ -127,8 +151,8 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
+                                                                        <td><input type="text" id="show_unit" disabled="true" class="form-control"></td>
+                                                                        <td><input type="text" id="show_qnt" disabled="true" class="form-control"></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -149,8 +173,7 @@
                 </div>
             </div>
         </div>
-    </div>
-
+    </div>                                                                
     <?php
     include("includes/footer.php");
     ?>

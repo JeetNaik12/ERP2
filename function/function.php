@@ -84,3 +84,14 @@ function ddd($array){
     print_r($array);
     die;
 }
+
+/**
+ * Send json response
+ *
+ * @param [type] $array
+ * @return void
+ */
+function send_json_response($array){
+    echo json_encode($array);
+    die;
+}
