@@ -1,5 +1,6 @@
 <?php
     include("includes/header.php");
+    require("DB/db.php");
 ?> 
    <div class="container-fluid">
             <div class="row">
@@ -13,9 +14,17 @@
                                
                                     <div class="col-sm-3" style="float:right;">
                                     <select class="form-control" id="educationDate" name="educationDate">
-                                                                <option>Select Company</option>
-                                                                <option value="2015">2015</option>
-                                                            </select>
+                                       <option>Select Company</option>
+                                       <?php           
+                            $qry="Select * from tbl_company";
+                            $res=mysqli_query($con,$qry);	
+                            while($row=mysqli_fetch_array($res)){
+                            ?>                     
+                             <option value=<?php echo $row['id'];?>><?php echo $row['company_name'];?></option>
+                            <?php
+                            }
+                            ?>
+                                    </select>
                                     </div>
                                 </div>
                                 <br/>
@@ -29,8 +38,15 @@
                                                             <label for="name">Project name</label>
                                                             <select class="form-control" id="educationDate" name="educationDate">
                                                                 <option>Select Project Name</option>
-                                                                <option value="2015">2015</option>
-
+                                                                <?php          
+                                                        $qry="Select * from tbl_project";
+                                                        $res=mysqli_query($con,$qry);	
+                                                        while($row=mysqli_fetch_array($res)){
+                                                        ?>                     
+                                                        <option value=<?php echo $row['id'];?>><?php echo $row['project_name'];?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -53,15 +69,31 @@
                                                             <label for="name">Supllier</label>
                                                             <select class="form-control" id="educationDate" name="educationDate">
                                                                 <option>Select Supllier</option>
-                                                                <option value="2015">2015</option>
+                                                                <?php           
+                                                                    $qry="Select * from tbl_supplier";
+                                                                    $res=mysqli_query($con,$qry);	
+                                                                    while($row=mysqli_fetch_array($res)){
+                                                                    ?>                     
+                                                                    <option value=<?php echo $row['id'];?>><?php echo $row['supplier_name'];?></option>
+                                                                    <?php
+                                                            }
+                                                            ?>
                                                             </select>
-                                                        </div>
+                                                   </div>
                                                     </div>
                                                     <div class="form-group col-md-3">
                                                         <label for="name">Company</label>
                                                         <select class="form-control" id="educationDate" name="educationDate">
-                                                                <option>Select Company</option>
-                                                                <option value="2015">2015</option>
+                                                        <option>Select company</option>
+                                                        <?php           
+                            $qry="Select * from tbl_company";
+                            $res=mysqli_query($con,$qry);	
+                            while($row=mysqli_fetch_array($res)){
+                            ?>                     
+                             <option value=<?php echo $row['id'];?>><?php echo $row['company_name'];?></option>
+                            <?php
+                            }
+                            ?>
                                                             </select>
                                                     </div>
                                                     <div class="form-group col-md-3">

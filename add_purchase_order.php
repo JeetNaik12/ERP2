@@ -1,5 +1,10 @@
     <?php
     include("includes/header.php");
+    require("DB/db.php");
+    // include("function/common.php");
+    // $result = get_item();
+    //     print_r($result);
+    //     exit();
 ?>
    <div class="container-fluid">
             <div class="row">
@@ -13,9 +18,17 @@
                                
                                     <div class="col-sm-3" style="float:right;">
                                     <select class="form-control" id="educationDate" name="educationDate">
-                                                                <option>Select Company</option>
-                                                                <option value="2015">2015</option>
-                                                            </select>
+                                    <option>Select company</option>
+                                    <?php           
+                                    $qry="Select * from tbl_company";
+                                    $res=mysqli_query($con,$qry);	
+                                    while($row=mysqli_fetch_array($res)){
+                                    ?>                     
+                                    <option value=<?php echo $row['id'];?>><?php echo $row['company_name'];?></option>
+                                    <?php
+                            }
+                            ?>
+                                </select>
                                     </div>
                                 </div>
                                 <br/>
@@ -28,9 +41,17 @@
                                                         <div class="form-group">
                                                             <label for="name">Project name</label>
                                                             <select class="form-control" id="educationDate" name="educationDate">
-                                                                <option>Select Project Name</option>
-                                                                <option value="2015">2015</option>
-
+                                                            <option>Select project</option>    
+                                                        <?php          
+                                                        $qry="Select * from tbl_project";
+                                                        $res=mysqli_query($con,$qry);	
+                                                        while($row=mysqli_fetch_array($res)){
+                                                        ?>                     
+                                                        <option value=<?php echo $row['id'];?>><?php echo $row['project_name'];?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                        </select>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -61,7 +82,15 @@
                                                         <label for="name">Company</label>
                                                         <select class="form-control" id="educationDate" name="educationDate">
                                                                 <option>Select Company</option>
-                                                                <option value="2015">2015</option>
+                                                                <?php           
+                                                                    $qry="Select * from tbl_company";
+                                                                    $res=mysqli_query($con,$qry);	
+                                                                    while($row=mysqli_fetch_array($res)){
+                                                                    ?>                     
+                                                                    <option value=<?php echo $row['id'];?>><?php echo $row['company_name'];?></option>
+                                                                    <?php
+                                                            }
+                                                            ?>
                                                             </select>
                                                     </div>
                                                     <div class="form-group col-md-3">
@@ -93,7 +122,8 @@
                                                                         <th scope="col">BASIC AMT</th>
                                                                         <th scope="col">GST %</th>
                                                                         <th scope="col">GST AMT</th>
-                                                                        <th scope="col">TOTAL</th>   
+                                                                        <th scope="col">TOTAL</th>
+                                                                        <th scope="col">ACTION</th>   
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -104,159 +134,17 @@
                                                                         <option value="2015">2015</option>
                                                                         </select>
                                                                     </td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
+                                                                        <td><input type="text" class="form-control"></td>
+                                                                        <td><input type="text" class="form-control"></td>
+                                                                        <td><input type="text" class="form-control"></td>
+                                                                        <td><input type="text" class="form-control"></td>
+                                                                        <td><input type="text" class="form-control"></td>
+                                                                        <td><input type="text" class="form-control"></td>
+                                                                        <td><input type="text" class="form-control"></td>
+                                                                        <td><input type="text" class="form-control"></td>
+                                                                        <td><button class="btn btn-success incerement-order-item-fields" type="button"><i class="fa fa-plus"></i></button></td>
                                                                     </tr>
-                                                                    <!-- <tr>
-                                                                    <td> 
-                                                                        <select class="form-control" id="educationDate" name="educationDate">
-                                                                        <option>Item</option>
-                                                                        <option value="2015">2015</option>
-                                                                        </select>
-                                                                    </td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                    <td> 
-                                                                        <select class="form-control" id="educationDate" name="educationDate">
-                                                                        <option>Item</option>
-                                                                        <option value="2015">2015</option>
-                                                                        </select>
-                                                                    </td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                    <td> 
-                                                                        <select class="form-control" id="educationDate" name="educationDate">
-                                                                        <option>Item</option>
-                                                                        <option value="2015">2015</option>
-                                                                        </select>
-                                                                    </td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                    <td> 
-                                                                        <select class="form-control" id="educationDate" name="educationDate">
-                                                                        <option>Item</option>
-                                                                        <option value="2015">2015</option>
-                                                                        </select>
-                                                                    </td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                    <td> 
-                                                                        <select class="form-control" id="educationDate" name="educationDate">
-                                                                        <option>Item</option>
-                                                                        <option value="2015">2015</option>
-                                                                        </select>
-                                                                    </td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                    <td> 
-                                                                        <select class="form-control" id="educationDate" name="educationDate">
-                                                                        <option>Item</option>
-                                                                        <option value="2015">2015</option>
-                                                                        </select>
-                                                                    </td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                    <td> 
-                                                                        <select class="form-control" id="educationDate" name="educationDate">
-                                                                        <option>Item</option>
-                                                                        <option value="2015">2015</option>
-                                                                        </select>
-                                                                    </td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                    <td> 
-                                                                        <select class="form-control" id="educationDate" name="educationDate">
-                                                                        <option>Item</option>
-                                                                        <option value="2015">2015</option>
-                                                                        </select>
-                                                                    </td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                    <td> 
-                                                                        <select class="form-control" id="educationDate" name="educationDate">
-                                                                        <option>Item</option>
-                                                                        <option value="2015">2015</option>
-                                                                        </select>
-                                                                    </td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                    </tr> -->
+                                                                  
                                                                     
 
                                                                     <tr>

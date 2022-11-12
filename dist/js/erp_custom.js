@@ -32,7 +32,10 @@ $(function () {
             console.log("rid", rid)
             $('.removeclass' + rid).remove();
         }
-
+    });
+    $(document).on('click','.incerement-order-item-fields',function(){
+        // alert("helll");
+        //order_item_fields();
     });
 
     //material request form
