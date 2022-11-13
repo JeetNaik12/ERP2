@@ -1,6 +1,17 @@
 <?php
     include("includes/header.php");
     require("DB/db.php");
+    $item_array = array();
+    $qry="Select * from tbl_item";
+    $res=mysqli_query($con,$qry);
+    while($row=mysqli_fetch_array($res)){
+        $tmp_arr = array(
+            'id' => $row['id'],
+            'item_name' => $row['item_name']
+        );
+        array_push( $item_array,  $tmp_arr);
+    }
+    $m_r_no = uniqid('req');
 ?> 
    <div class="container-fluid">
             <div class="row">
@@ -13,7 +24,7 @@
                                     </div>
                                
                                     <div class="col-sm-3" style="float:right;">
-                                    <select class="form-control" id="educationDate" name="educationDate">
+                                    <select class="form-control" id="company" name="company">
                                        <option>Select Company</option>
                                        <?php           
                             $qry="Select * from tbl_company";
@@ -31,12 +42,12 @@
                                     <div class="repeater-default m-t-30">
                                       <div data-repeater-list="">
                                             <div data-repeater-item="">
-                                              <form>
+                                              <form class="needs-validation receive-material-request-form" id="receive-material-request-form" novalidate>
                                               <div class="form-row">
                                                     <div class="form-group col-md-3">
                                                         <div class="form-group">
                                                             <label for="name">Project name</label>
-                                                            <select class="form-control" id="educationDate" name="educationDate">
+                                                            <select class="form-control" id="project_name" name="project_name">
                                                                 <option>Select Project Name</option>
                                                                 <?php          
                                                         $qry="Select * from tbl_project";
@@ -52,22 +63,22 @@
                                                     </div>
                                                     <div class="form-group col-md-3">
                                                         <label for="name">Date</label>
-                                                        <input type="date" class="form-control" placeholder="Name">
+                                                        <input type="date" id="date" class="form-control" name="date" placeholder="Name">
                                                     </div>
                                                     <div class="form-group col-md-3">
                                                         <div class="form-group">
                                                         <label for="email">M R No</label>
-                                                        <input type="email" class="form-control" disable placeholder="R No">
+                                                        <input type="email" class="form-control" id="m_r_no" name="m_r_no" readonly="readonly" disable placeholder="R No">
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-3">
                                                         <label for="email">create From</label>
-                                                        <input type="email" class="form-control" placeholder="create From">
+                                                        <input type="email" class="form-control" id="create-form" name="create-form" placeholder="create From">
                                                     </div>
                                                     <div class="form-group col-md-3">
                                                         <div class="form-group">
                                                             <label for="name">Supllier</label>
-                                                            <select class="form-control" id="educationDate" name="educationDate">
+                                                            <select class="form-control" id="supplier" name="supplier">
                                                                 <option>Select Supllier</option>
                                                                 <?php           
                                                                     $qry="Select * from tbl_supplier";
@@ -99,12 +110,12 @@
                                                     <div class="form-group col-md-3">
                                                         <div class="form-group">
                                                         <label for="email">Sales Man</label>
-                                                        <input type="email" class="form-control" disable placeholder="Sales Man">
+                                                        <input type="email" class="form-control" placeholder="Sales Man" id="salesman" name="salesman">
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-3">
                                                     <label class="custom-control custom-checkbox" style="margin-top: 30px;padding: 0 50px 0 50px;">
-                                                            <input type="checkbox" class="custom-control-input">
+                                                            <input type="checkbox" class="custom-control-input" id="with-bill" name="with-bill">
                                                                 <span class="custom-control-label">With Bill</span>
                                                         </label>
                                                         <!-- <label for="email">Terms</label>
@@ -117,53 +128,49 @@
                                                         <div class="card-body">
                                                             <h4 class="card-title">Description</h4>
                                                         </div>
-                                                        <div class="table-responsive">
+                                                        <div class="table-responsive" id="receive-item_fields">
                                                             <table class="table table-bordered">
                                                                 <thead>
                                                                     <tr>
                                                                         <th rowspan="2" scope="col" style="text-align: center;vertical-align:middle">ITEM</th>
                                                                         <th colspan="2" scope="col" style="text-align: center;">ORDER</th>
                                                                         <th colspan="2" scope="col" style="text-align: center;">RECEIVED</th>
+                                                                        <th rowspan="2" scope="col" style="text-align: center;vertical-align:middle">ACTION</th>
                                                                     </tr>
                                                                     <tr>
-                                                                       <th scope="col">QNT & UNIT</th>
-                                                                        <th scope="col">ALR ANT & QUANTITY</th>
-                                                                        <th scope="col">QNT & UNIT</th>
-                                                                        <th scope="col">ALR ANT & QUANTITY</th>
+                                                                       <th scope="col">UNIT</th>
+                                                                        <th scope="col">QUANTITY</th>
+                                                                        <th scope="col">UNIT</th>
+                                                                        <th scope="col">QUANTITY</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr>
                                                                     <td> 
-                                                                        <select class="form-control" id="educationDate" name="educationDate">
+                                                                        <select class="form-control" id="item" data-row-id="0" name="item[]">
                                                                         <option>Select Item</option>
-                                                                        <option value="2015">2015</option>
+                                                                        <?php
+                                                                                foreach($item_array as  $item){
+                                                                                ?> 
+                                                                                    <option value=<?php echo $item['id'];?>><?php echo $item['item_name'];?></option>
+                                                                                <?php
+                                                                                }
+                                                                                ?>
                                                                         </select>
                                                                     </td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
+                                                                       <td><input type="text" data-identifier="" id="unit" name="unit[]"  readonly="readonly" class="form-control units"></td>
+                                                                        <td><input type="text"  data-identifier="" name="quantity[]" class="form-control quantity-input"></td>
+                                                                        <td><input type="text" data-identifier="" id="unit" name="unit[]"  readonly="readonly" class="form-control units"></td>
+                                                                        <td><input type="text"  data-identifier="" name="quantity[]" class="form-control quantity-input"></td>
+                                                                        <td><button class="btn btn-success incerement-material-item-fields" type="button"><i class="fa fa-plus"></i></button></td>
                                                                     </tr>
-                                                                    <tr>
-                                                                    <td> 
-                                                                        <select class="form-control" id="educationDate" name="educationDate">
-                                                                        <option>Item</option>
-                                                                        <option value="2015">2015</option>
-                                                                        </select>
-                                                                    </td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                        <td><input type="email" class="form-control"></td>
-                                                                    </tr>
-                                                                    <tr>
+                                                                 <!-- <tr>
                                                                     <td scope="col">TOTAL</td>
                                                                     <td></td>
                                                                         <td></td>
                                                                         <td></td>
                                                                         <td></td>
-                                                                    </tr>
+                                                                    </tr> -->
 
                                                                 </tbody>
                                                             </table>
@@ -178,7 +185,7 @@
                                                 <div class="form-group col-md-3">
                                                         <div class="form-group">
                                                             <label for="name">Transport name</label>
-                                                            <select class="form-control" id="educationDate" name="educationDate">
+                                                            <select class="form-control" id="transport-name" name="transport-name">
                                                                 <option>Select transport Name</option>
                                                                 <option value="2015">2015</option>
 
@@ -186,18 +193,18 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-3">
-                                                        <label for="name">G R No</label>
-                                                        <input type="text" class="form-control" placeholder="G R No">
+                                                        <label for="g-r-no">G R No</label>
+                                                        <input type="text" class="form-control" placeholder="G R No" id="g-r-no" name="g-r-no">
                                                     </div>
                                                     <div class="form-group col-md-3">
                                                         <div class="form-group">
-                                                        <label for="email">Mator No</label>
-                                                        <input type="email" class="form-control" disable placeholder="Mator No">
+                                                        <label for="mator-no">Mator No</label>
+                                                        <input type="text" class="form-control" disable placeholder="Mator No" id="mator-no" name="mator-no">
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-3">
-                                                        <label for="email">Station</label>
-                                                        <input type="email" class="form-control" placeholder="Station">
+                                                        <label for="station">Station</label>
+                                                        <input type="text" class="form-control" placeholder="Station" id="station" name="station">
                                                     </div>                                             
                                                </div>  
                                                
@@ -217,8 +224,9 @@
                                               </form>
                                             </div>
                                         </div>
-                                        <button data-repeater-create="" style="float:right" class="btn btn-info waves-effect waves-light">Save
-                                    </button>
+                                        <button type="submit" data-repeater-create="" form="receive-material-request-form" id="btn-receive-material-request-form" style="float:right" type="button" class="btn btn-info waves-effect waves-light">
+                                    Save
+                                </button>
                                     </div>
                             </div>
                         </div>

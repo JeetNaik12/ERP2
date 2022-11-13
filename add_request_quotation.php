@@ -1,6 +1,17 @@
     <?php
     include("includes/header.php");
     require("DB/db.php");
+    $item_array = array();
+    $qry="Select * from tbl_item";
+    $res=mysqli_query($con,$qry);
+    while($row=mysqli_fetch_array($res)){
+        $tmp_arr = array(
+            'id' => $row['id'],
+            'item_name' => $row['item_name']
+        );
+        array_push( $item_array,  $tmp_arr);
+    }
+    $r_no = uniqid();
 ?> 
     <div class="container-fluid">
             <div class="row">
@@ -13,7 +24,7 @@
                                     </div>
                                
                                     <div class="col-sm-3" style="float:right;">
-                                    <select class="form-control" id="educationDate" name="educationDate">
+                                    <select class="form-control" id="company" name="company">
                                                                 <option>Select Company</option>
                                                                 <?php           
                                                                     $qry="Select * from tbl_company";
@@ -31,12 +42,12 @@
                                     <div class="repeater-default m-t-30">
                                       <div data-repeater-list="">
                                             <div data-repeater-item="">
-                                              <form>
+                                              <form class="needs-validation request-quotation-form" id="request-quotation-form" novalidate>
                                               <div class="form-row">
                                                     <div class="form-group col-md-4">
                                                         <div class="form-group">
                                                             <label for="name">Project name</label>
-                                                            <select class="form-control" id="educationDate" name="educationDate">
+                                                            <select class="form-control" id="project_name" name="project_name">
                                                                 <option>Select Project Name</option>
                                                                 <?php          
                                                         $qry="Select * from tbl_project";
@@ -53,22 +64,22 @@
                                                     </div>
                                                     <div class="form-group col-md-4">
                                                         <label for="name">Date</label>
-                                                        <input type="date" class="form-control" placeholder="Name">
+                                                        <input type="date" id="date" class="form-control" name="date" placeholder="Name">
                                                     </div>
                                                     <div class="form-group col-md-4">
                                                         <div class="form-group">
                                                         <label for="email">R No</label>
-                                                        <input type="email" class="form-control" disable placeholder="R No">
+                                                        <input type="email" class="form-control" readonly="readonly" id="r_no" name="r_no" disable placeholder="R No" value=<?php echo $r_no;?>>
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-4">
-                                                        <label for="email">create From</label>
-                                                        <input type="email" class="form-control" placeholder="create From">
+                                                        <label for="create_form">create From</label>
+                                                        <input type="text" id="create_form" name="create_form" class="form-control" placeholder="create From">
                                                     </div>
                                                     <div class="form-group col-md-4">
                                                     <div class="form-group">
                                                             <label for="name">Supplier</label>
-                                                            <select class="form-control" id="educationDate" name="educationDate">
+                                                            <select class="form-control" id="supplier_name" name="supplier_name">
                                                                 <option>Select Supplier Name</option>
                                                                 <?php           
                                                                     $qry="Select * from tbl_supplier";
@@ -89,7 +100,7 @@
                                                         <div class="card-body">
                                                             <h4 class="card-title">Description</h4>
                                                         </div>
-                                                        <div class="table-responsive" id="item_fields">
+                                                        <div class="table-responsive" id="req_item_fields">
                                                             <table class="table table-bordered">
                                                                 <thead>
                                                                     <tr>
@@ -100,25 +111,23 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
+                                                                    <tr class="item-row-wrapper">
                                                                         <td>
-                                                                            <select class="form-control items" id="item" name="item[]" >
+                                                                            <select class="form-control items" id="items" name="item[]" >
                                                                                 <option>Select Item</option>
-                                                                                <?php          
-                                                                                $qry="Select * from tbl_item";
-                                                                                $res=mysqli_query($con,$qry);	
-                                                                                while($row=mysqli_fetch_array($res)){
+                                                                                <?php
+                                                                                foreach($item_array as  $item){
                                                                                 ?> 
-                                                                                <option value=<?php echo $row['id'];?>><?php echo $row['item_name'];?></option>
+                                                                                    <option value=<?php echo $item['id'];?>><?php echo $item['item_name'];?></option>
                                                                                 <?php
                                                                                 }
                                                                                 ?>
                                                                             </select>
                                                                         </td>
-                                                                        <td><input type="unit" data-identifier="" id="unit" name="unit[]" disabled=true class="form-control"></td>
-                                                                        <td><input type="quantity"  data-identifier="" name="quantity[]" class="form-control"></td>
+                                                                        <td><input type="text" data-identifier="" id="unit" name="unit[]"  readonly="readonly" class="form-control units"></td>
+                                                                        <td><input type="text"  data-identifier="" name="quantity[]" class="form-control quantity-input"></td>
                                                                         <!-- <td><button class="btn btn-success incerement-item-fields" type="button" onclick="item_fields();"><i class="fa fa-plus"></i></button></td> -->
-                                                                        <td><button class="btn btn-success incerement-item-fields" data1="xyz" type="button"><i class="fa fa-plus"></i></button></td>
+                                                                        <td><button class="btn btn-success incerement-req-item-fields" data1="xyz" type="button"><i class="fa fa-plus"></i></button></td>
                                                                     </tr>
 
                                                                 </tbody>
@@ -131,7 +140,7 @@
                                                                 <td>TOTAL</td>
                                                                 <td><input type="email" class="form-control"></td>
                                                                 <td><input type="email" class="form-control"></td>
-                                                                <td><input type="email" class="form-control"></td>
+                                                                <td><input type="text" id="total_qty" name="total_quentity" class="form-control"></td>
                                                             </tr>
                                                         </table>
                                                     </div>
@@ -142,8 +151,8 @@
                                                 
                                                 <div class="form-row">
                                                 <div class="form-group col-md-8">
-                                                <label for="msg">Remark</label>
-                                                <textarea class="form-control" rows="3" placeholder="Message"></textarea>
+                                                <label for="remark">Remark</label>
+                                                <textarea class="form-control" rows="3" placeholder="Message" id="remark" name="remark"></textarea>
                                                 </div>
                                                 <div class="form-group col-md-4" >
                                                 <button data-repeater-create="" class="btn btn-info waves-effect waves-light" style="margin:40px">Save & Send
@@ -154,8 +163,9 @@
                                               </form>
                                             </div>
                                         </div>
-                                        <button data-repeater-create="" style="float:right" class="btn btn-info waves-effect waves-light">Save
-                                    </button>
+                                        <button type="submit" data-repeater-create="" form="request-quotation-form" id="btn-request-quotation-form" style="float:right" class="btn btn-info waves-effect waves-light">
+                                    Save
+                                </button>
                                     </div>
                             </div>
                         </div>
