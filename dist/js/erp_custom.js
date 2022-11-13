@@ -91,7 +91,7 @@ $(function () {
     }
 
 
-    function calculate_gst_amount(){
+    function calculate_gst_amount() {
         let total_gst_amount = 0;
         $(".gst_amt").each(function () {
             let value = $(this).val();
@@ -99,8 +99,8 @@ $(function () {
         });
         $('.total_gst_amount').val(total_gst_amount);
     }
-    
-    function total_amount(){
+
+    function total_amount() {
         let total_amount = 0;
         $(".total").each(function () {
             let value = $(this).val();
@@ -123,7 +123,7 @@ $(function () {
         }
         $(".quantity-input").each(function () {
             let value = $(this).val();
-            qty = qty + parseFloat(value,2);
+            qty = qty + parseFloat(value, 2);
         });
 
         $('#total_qty').val(qty);
