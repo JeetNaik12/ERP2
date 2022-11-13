@@ -175,13 +175,13 @@
                                                             <tr>
                                                                 <td>TOTAL</td>
                                                                 <td><input type="email" class="form-control"></td>
-                                                                <td><input type="text" id="total_qty" name="total_quentity" class="form-control"></td>
+                                                                <td><input type="text"  id="total_qty" name="total_quentity" class="form-control total_qty"></td>
+                                                                <td><input type="email" class="form-control total_rate" name="total_rate" ></td>
                                                                 <td><input type="email" class="form-control"></td>
-                                                                <td><input type="text" id="basic-amt-total" name="basic-amt-total   " class="form-control"></td>
+                                                                <td><input type="text"  name="basic-amt-total" class="form-control basic-amt-total"></td>
                                                                 <td><input type="email" class="form-control"></td>
-                                                                <td><input type="email" class="form-control"></td>
-                                                                <td><input type="email" class="form-control"></td>
-                                                                <td><input type="email" class="form-control"></td>
+                                                                <td><input type="email" class="form-control total_gst_amount" name="total_gst_amount"></td>
+                                                                <td><input type="email" class="form-control total_amount" name="total_amount"></td>
                                                             </tr>
                                                         </table>
                                                     </div>
