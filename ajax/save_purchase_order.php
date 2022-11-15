@@ -28,21 +28,25 @@ if(!empty($date )){
 $items = (isset($_POST['item']) ? $_POST['item'] : null);
 $quantity = (isset($_POST['quantity']) ? $_POST['quantity'] : null);
 // $units2 = (isset($_POST['units2']) ? $_POST['units2'] : null);
+$createform = (isset($_POST['create-form']) ? $_POST['create-form'] : null);
+$supplier_name = (isset($_POST['supplier']) ? $_POST['supplier'] : null);
+$r_no = (isset($_POST['r_no']) ? $_POST['r_no'] : null);
+
 $units2 = (isset($_POST['unit']) ? $_POST['unit'] : null);
-$qty2 = (isset($_POST['qty2']) ? $_POST['qty2'] : null);
+$quantity = (isset($_POST['quantity']) ? $_POST['quantity'] : null);
 $rate = (isset($_POST['rate']) ? $_POST['rate'] : null);
-$per = (isset($_POST['per']) ? $_POST['per'] : null);
-$basic_amt = (isset($_POST['basic_amt']) ? $_POST['basic_amt'] : null);
+// $per = (isset($_POST['per']) ? $_POST['per'] : null);
+$per = 1;
+$basic_amt = (isset($_POST['basic-amt-total']) ? $_POST['basic-amt-total'] : null);
 $gst = (isset($_POST['gst']) ? $_POST['gst'] : null);
 $gst_amt = (isset($_POST['gst_amt']) ? $_POST['gst_amt'] : null);
-$total = (isset($_POST['total']) ? $_POST['total'] : null);
+$total = (isset($_POST['total_amount']) ? $_POST['total_amount'] : null);
 
 // print_r($units2);die;
 
 $total_quentity = (isset($_POST['total_quentity']) ? $_POST['total_quentity'] : null); // total quentity
-$qry="Insert into tbl_purchase_order_entry(cmp_id,project_id,date,p_o_no,create_form,supplier,salesman,terms,grand_total,note,company_note,receiver_name,contact_no,basic_amt_tot,status) 
-values({$company},{$project_id},'{$date}','{$r_no}','{$create_form}',{$supplier_name},'{$salesman}','{$terms}','{$grand_total}','{$company_note}','{$receiver_name}','{$contact_no}',1,1)";
-print_r($qry);die;
+$qry="Insert into tbl_purchase_order_entry(cmp_id,project_id,date,p_o_no,create_from,supplier,salesman,terms,grand_total,note,company_note,receiver_name,contact_no,basic_amt_tot,status) 
+values({$company},{$project_id},'{$date}','{$r_no}','{$createform}',{$supplier_name},'{$salesman}','{$terms}','{$total}','{$note}','{$company_note}','{$receiver_name}','{$contact_no}',{$basic_amt},1)";
 $last_id = null;
 if(mysqli_query($con,$qry)){
     $last_id = mysqli_insert_id($con);
@@ -55,7 +59,8 @@ if(mysqli_query($con,$qry)){
 if(!empty($items)){
     foreach($items as $key => $item){
         // echo $units2[$key];die;
-        $item_qry="Insert into tbl_purchase_order_entry_detail(purchase_id,item_id,unit_id,qnt,rate,per,basic_amt,gst,gst_amt,total,status) values({$last_id},{$item},'{$units2[$key]}',{$quantity[$key]},{$rate},{$per},{$basic_amt},{$gst},{$gst_amt},{$total},1)";
+        $item_qry="Insert into tbl_purchase_order_entry_detail(purchase_id,item_id,unit_id,qnt,rate,per,basic_amt,gst,gst_amt,total,status) 
+        values({$last_id},{$item},'{$units2[$key]}',{$quantity[$key]},{$rate[$key]},{$per},{$basic_amt},{$gst[$key]},{$gst_amt[$key]},{$total},1)";
         // print_r($item_qry);die;
         if(!mysqli_query($con,$item_qry)){
             // ddd(mysqli_error($con));
