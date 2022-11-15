@@ -218,7 +218,7 @@ $(function () {
         });
     });
 
-    $(document).on('click', '.incerement-order-item-fields', function () {
+    $(document).on('click', '.incerement-order-item-fields, .incerement-req-item-fields', function () {
         request_quotation_item_fields();
 
     });

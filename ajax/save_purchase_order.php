@@ -18,7 +18,7 @@ $company_note = (isset($_POST['company_note']) ? $_POST['company_note'] : null);
 $receiver_name = (isset($_POST['receiver_name']) ? $_POST['receiver_name'] : null);
 $contact_no = (isset($_POST['contact_no']) ? $_POST['contact_no'] : null);
 $basic_amt_tot = (isset($_POST['basic_amt_tot']) ? $_POST['basic_amt_tot'] : null);
-
+$note = (isset($_POST['note']) ? $_POST['note'] : null);
 //$request_code = (isset($_POST['request_code']) ? $_POST['request_code'] : null);
 
 if(!empty($date )){

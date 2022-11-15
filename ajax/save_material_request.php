@@ -28,7 +28,6 @@ $qry="Insert into tbl_material_request(cmp_id,project_id,date,req_type,req_code,
 $last_id = null;
 if(mysqli_query($con,$qry)){
     $last_id = mysqli_insert_id($con);
-    echo $last_id;
 }else{
     // ddd(mysqli_error($con));
     $response['message'] = 'Something Went Wrong!';

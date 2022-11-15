@@ -38,7 +38,7 @@ if(mysqli_query($con,$qry)){
     $last_id = mysqli_insert_id($con);
     // echo $last_id;
 }else{
-    // ddd(mysqli_error($con));
+    ddd(mysqli_error($con));
     $response['message'] = 'Something Went Wrong!';
     send_json_response($response);
 }
