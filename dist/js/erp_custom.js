@@ -423,4 +423,30 @@ $(function () {
     });
 
 
+    $(document).on('keyup', '#on-value', function (e) {
+        calculate_other_charges();
+    });
+
+    $(document).on('keyup', '#increment-decrement-value', function (e) {
+        calculate_other_charges();
+    });
+    $(document).on('keyup', '.total_amount', function (e) {
+        calculate_other_charges();
+    });
+
+
+    function calculate_other_charges(){
+        let amount = parseFloat($(".total_amount").val(),2);
+        let charge_amount = parseFloat($("#on-value").val(),2);
+        let inc_dec_val = $("#increment-decrement-value").val();
+        let total_amount = 0;
+
+        if(inc_dec_val == '+'){
+            total_amount = amount + charge_amount;
+        }else if(inc_dec_val == '-'){
+            total_amount = amount - charge_amount;
+        }
+
+        $("#tot-bill-amt").val(total_amount);
+    }
 });

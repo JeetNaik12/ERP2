@@ -75,7 +75,7 @@
                                                     </div>
                                                     <div class="form-group col-md-3">
                                                         <label for="email">Create From</label>
-                                                        <input type="email" class="form-control" placeholder="Create From" id="create-form" name="create-form">
+                                                        <input type="email" class="form-control" placeholder="Create From" id="create-form" name="create_form">
                                                     </div>
                                                     <div class="form-group col-md-3">
                                                         <div class="form-group">
@@ -143,9 +143,9 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
+                                                                    <tr class="item-row-wrapper">
                                                                     <td> 
-                                                                        <select class="form-control" id="item" data-row-id="0" name="item[]">
+                                                                        <select class="form-control items" id="item" data-row-id="0" name="item[]">
                                                                         <option>Select Item</option>
                                                                         <?php
                                                                                 foreach($item_array as  $item){
@@ -186,11 +186,11 @@
                                                 <div class="form-row">
                                                 <div class="form-group col-md-2">
                                                 <label for="other-charges">Other charges</label>
-                                                <input type="text" class="form-control" rows="3" placeholder="" id="other-charges" name="other-charges">
+                                                <input type="text" class="form-control" rows="3" placeholder="" id="other-charges" name="other_charges">
                                                 </div>
                                                 <div class="form-group col-md-2">
                                                 <label for="remark">Remark</label>
-                                                <input type="text" class="form-control" rows="3" placeholder="" id="remark" name="remark">
+                                                <input type="text" class="form-control" rows="3" placeholder="" id="remark" name="other_charges_remark">
                                                 </div>
                                                 <div class="form-group col-md-2">
                                                 <label for="on-value">On Value</label>
@@ -206,14 +206,15 @@
                                                 </div>
                                                 <div class="form-group col-md-2">
                                                 <label for="amount">Amount</label>
-                                                <input type="text" class="form-control" rows="3" placeholder="" id="amount" name="amount">
+                                                <input type="text" class="form-control total_amount" rows="3" placeholder="" id="amount" name="amount">
                                                 </div>
                                                 </div>
                                                 
                                         
                                                 <div class="form-row">
                                                 <div class="form-group col-md-2">
-                                                <button data-repeater-create="" class="btn btn-info waves-effect waves-light" style="height:80px;margin:20px">Upload Bill</button>
+                                                <!-- <button data-repeater-create="" class="btn btn-info waves-effect waves-light" style="height:80px;margin:20px">Upload Bill</button> -->
+                                                    <input type="file" class="form-control form-control-file"  name="bill_image" accept="image/png, image/gif, image/jpeg" />
                                                 </div>
                                                 <div class="form-group col-md-8">
                                                 <label for="remark">Remark</label>
@@ -221,7 +222,7 @@
                                                 </div>
                                                 <div class="form-group col-md-2">
                                                 <label for="other-charge-2">Other charges total</label>
-                                                <input type="text" class="form-control" rows="2" placeholder="" id="other-charge-2" name="other-charge-2">
+                                                <input type="text" class="form-control" rows="2" placeholder="" id="other-charge-2" name="other_charge_total">
                                                 </div>
                                                 </div>
 
@@ -234,7 +235,7 @@
                                                 <!-- <div class="form-group col-md-2"> <label for="msg">Total Bill Amount</label></div> -->
                                                 <div class="form-group col-md-2">
                                                 <label for="tot-bill-amt">Total Bill Amount</label>
-                                                <input type="text" class="form-control" rows="3" placeholder="" id="tot-bill-amt" name="tot-bill-amt">
+                                                <input type="text" class="form-control" rows="3" placeholder="" id="tot-bill-amt" name="grand_total">
                                                 </div>
                                                 </div>
 
